@@ -1,0 +1,35 @@
+pkgname="{{cookiecutter.name}}"
+pkgver="{{cookiecutter.ver}}"
+pkgrel="{{cookiecutter.rel}}"
+pkgdesc="{{cookiecutter.desc}}"
+arch=({{cookiecutter.arch}})
+url="{{cookiecutter.url}}"
+conflicts=({{cookiecutter.conflicts}})
+provides=({{cookiecutter.provides}})
+source=({{cookiecutter.git}})
+md5sums=({{cookiecutter.md5sums}})
+
+pkgver() {
+	cd "${pkgname%-*}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "${pkgname%-*}"
+
+	if [[ -d build ]]; then
+		rm -rf build
+	fi
+	mkdir build && cd build
+
+	cmake .. \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release
+	make
+}
+
+package() {
+	cd "${pkgname%-*}"/build
+
+	make DESTDIR="$pkgdir" install
+}

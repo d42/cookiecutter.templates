@@ -1,0 +1,13 @@
+{
+    "name": "sample_package",
+    "rel": "1",
+    "ver": "r1",
+    "desc": "package description",
+    "url": "http://example.com",
+    "arch": "'i686' 'x86_64'",
+    "license": "GPL2",
+    "md5sums": "'SKIP'",
+    "conflicts": "\"${pkgname%-*}\"",
+    "provides": "\"${pkgname%-*}\"",
+    "git": "\"out_directory::git://git.example.com/foo.git#branch=project_branch\""
+}
